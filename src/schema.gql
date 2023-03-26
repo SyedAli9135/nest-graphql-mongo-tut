@@ -1,0 +1,157 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type address {
+  _id: String!
+
+  """Street"""
+  street: String!
+
+  """City"""
+  city: String!
+
+  """State address """
+  state: String!
+
+  """ZIP address """
+  zip: String!
+}
+
+type User {
+  _id: String!
+
+  """User firstName """
+  firstName: String!
+
+  """User lastName """
+  lastName: String!
+
+  """User email """
+  email: String!
+
+  """User role"""
+  role: String!
+  addresses: [address!]!
+}
+
+type PageDataDto {
+  count: Float!
+  limit: Float!
+  offset: Float!
+}
+
+type ListUsersResponse {
+  page: UserConnection!
+  pageData: PageDataDto
+}
+
+type UserConnection {
+  edges: [UserEdge!]
+  pageInfo: UserPageInfo
+}
+
+type UserEdge {
+  cursor: String
+  node: User
+}
+
+type UserPageInfo {
+  startCursor: String
+  endCursor: String
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+}
+
+type LoggedUserOutput {
+  """Generated access_token of the user"""
+  access_token: String!
+}
+
+type Query {
+  sayHello: String!
+  users(listUsersInput: ListUsersInput!): [User!]!
+  listUsersWithCursor(args: ConnectionArgs!): ListUsersResponse!
+  user(email: String!): User!
+}
+
+input ListUsersInput {
+  """classical limit"""
+  limit: Float!
+
+  """classical offset"""
+  offset: Float!
+}
+
+input ConnectionArgs {
+  """Paginate before opaque cursor"""
+  before: String
+
+  """Paginate after opaque cursor"""
+  after: String
+
+  """Paginate first"""
+  first: Float
+
+  """Paginate last"""
+  last: Float
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  loginUser(loginUserInput: LoginUserInput!): LoggedUserOutput!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(_id: String!): User!
+}
+
+input CreateUserInput {
+  """first name of the user"""
+  firstName: String!
+
+  """last name of the user"""
+  lastName: String!
+
+  """email of the user"""
+  email: String!
+
+  """role of the user"""
+  role: String!
+
+  """password of the user"""
+  password: String!
+  addresses: [Address!]!
+}
+
+input Address {
+  street: String!
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input LoginUserInput {
+  """email of the user"""
+  email: String!
+
+  """password of the user"""
+  password: String!
+}
+
+input UpdateUserInput {
+  """first name of the user"""
+  firstName: String
+
+  """last name of the user"""
+  lastName: String
+
+  """email of the user"""
+  email: String
+
+  """role of the user"""
+  role: String
+
+  """password of the user"""
+  password: String
+  addresses: [Address!]
+  _id: String!
+}
